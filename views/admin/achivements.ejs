@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Все достижения</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+
+</head>
+
+<body>
+    <%include ../header %>
+        <div class="form container">
+            <form action="/admin/achivements" method="post" encType="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title" id="title" aria-describedby="helpIdTitle" placeholder="title">
+                    <small id="helpIdTitle" class="form-text text-muted">title</small>
+                </div>
+                <div class="form-group">
+                    <label for="descr">Description</label>
+                    <input type="text" class="form-control" name="descr" id="descr" aria-describedby="helpIdDescr" placeholder="descr">
+                    <small id="helpIdDescr" class="form-text text-muted">description</small>
+                </div>
+                <div class="form-group">
+                    <label for="img"></label>
+                    <input type="file" class="form-control-file" name="img" id="img" placeholder="image" aria-describedby="fileHelpId" accept="image/*">
+                    <small id="fileHelpId" class="form-text text-muted">image</small>
+                </div>
+                <button type="submit" class="btn btn-outline-dark">Create</button>
+            </form>
+        </div>
+        <div class="container" style="overflow:auto;">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th class="text-center">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% achivements.forEach(function(re){ %>
+                        <tr id="<%=re._id%>">
+                            <td scope="row">
+                                <%=re.title%>
+                            </td>
+                            <td>
+                                <%=re.text%>
+                            </td>
+                            <td>
+                                <img class="achive achive-middle" src="<%=re.img%>"/>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-outline-danger" onclick="remove('<%=re._id%>')">
+                                    <i class="fa fa-eraser" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <%})%>
+                </tbody>
+            </table>
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            function remove(id){
+                $.get(`/admin/achivements/delete/${id}`,(data, status, jqxhr)=>{
+                    console.log(data);
+                    $(`#${id}`).remove();
+                });
+            }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

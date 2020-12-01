@@ -1,0 +1,9 @@
+{
+    "script": "bin/www",
+    "watch": true,
+    "ignore_watch": ["node_modules","public","views","uploads"],
+    "watch_options": {
+        "followSymlinks": false
+    },
+    "name": "DMF3.0",
+}

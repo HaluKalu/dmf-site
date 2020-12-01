@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Троеборье</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="../stylesheets/style.css">
+	<style>
+		#ananas {
+			display: flex;
+		}
+
+		.tab {
+			min-height: 70vh;
+			background-color: rgb(235, 235, 235);
+			min-width: 5vw;
+			border: 2px solid black;
+			margin-left: 5px;
+			transition: 0.4s;
+		}
+
+		.tab .card {
+			background-color: rgb(233, 233, 233);
+		}
+
+		.content {
+			display: none;
+		}
+
+		.preview__tab {
+			padding: 0 25px 28px 0;
+			font-size: 2.8rem;
+			display: block;
+			margin-left: 8px;
+			word-wrap: break-word;
+			word-break: break-all;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		.card-img-top {
+			width: 50%;
+			height: 100%;
+		}
+
+		.card-body {
+			display: flex;
+		}
+
+		.card-text {
+			text-align: center;
+			width: 100%;
+			font-size: 2rem;
+		}
+
+		@media (max-width: 768px) {
+			.vw5 {
+				display: none;
+			}
+			.vw70 {
+				width: 100vw;
+			}
+			.content {
+				max-height: 50vh;
+			}
+			.card-img-top {
+				width: 90%;
+			}
+			.card-body {
+				display: block;
+			}
+		}
+
+		@media (min-width: 769px) {
+			.vw5 {
+				width: 5vw;
+			}
+			.vw70 {
+				width: 70vw;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<%include header %>
+
+		<div class="container">
+			<p class="text h2 text-center">
+				<i class="fa fa-cubes" aria-hidden="true"></i>
+				<br class="big-screen-none"> Испытание троеборьем
+				<i class="fa fa-cubes" aria-hidden="true"></i>
+			</p>
+			<div id="ananas">
+				<div class="tab vw70" id="tab1" onclick="setTab(1)">
+					<div class="preview__tab" style="display:none">
+						<i class="fa fa-cube" aria-hidden="true"></i>
+						1 этап
+					</div>
+					<div class="content" style="display: block;">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">1 этап.</h4>
+							</div>
+							<div class="card-body">
+								<img class="card-img-top" src="../images/triath1.png" alt="Первый этап">
+								<p class="card-text">Скоро узнаете...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab vw5" id="tab2" onclick="setTab(2)">
+					<div class="preview__tab">
+						<i class="fa fa-cube" aria-hidden="true"></i>
+						2 этап
+					</div>
+
+					<div class="content">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">2 этап.</h4>
+							</div>
+							<div class="card-body">
+								<img class="card-img-top" src="../images/triath2.png" alt="Второй этап">
+								<p class="card-text">Скоро узнаете...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab vw5" id="tab3" onclick="setTab(3)">
+					<div class="preview__tab">
+						<i class="fa fa-cube" aria-hidden="true"></i>
+						3 этап
+					</div>
+
+					<div class="content">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">3 этап.</h4>
+							</div>
+							<div class="card-body">
+								<img class="card-img-top" src="../images/triath3.png" alt="Третий этап">
+								<p class="card-text">Скоро узнаете...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		 crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		 crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		 crossorigin="anonymous"></script>
+		<script src="../javascripts/jquery.touchSwipe.min.js"></script>
+		<script>
+			var nowTab = 1;
+			function setTab(i) {
+				if (nowTab != i) {
+					nowTab = i;
+					for (j = 1; j < 4; j++) {
+						if (j == i) {
+							// $("#tab" + j).css('width', '70vw');
+							$("#tab" + j).removeClass('vw5');
+							$("#tab" + j).addClass('vw70');
+							$("#tab" + j).children('.content').css('display', 'block');
+							$("#tab" + j).children('.preview__tab').css('display', 'none');
+						} else {
+							// $("#tab" + j).css('width', '5vw');
+							$("#tab" + j).removeClass('vw70');
+							$("#tab" + j).addClass('vw5');
+							$("#tab" + j).children('.content').css('display', 'none');
+							$("#tab" + j).children('.preview__tab').css('display', 'block');
+						}
+					}
+				}
+			}
+			$(function () {
+				$("#ananas").swipe({
+					swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+						if (direction === "left") {
+							if (nowTab != 3) {
+								setTab(nowTab + 1);
+							} else {
+								setTab(1);
+							}
+						} else if (direction == "right") {
+							if (nowTab == 1) {
+								setTab(3);
+							} else {
+								setTab(nowTab - 1);
+							}
+							setTab(nowTab);
+						}
+					},
+					threshold: 0
+				});
+			});
+		</script>
+</body>
+
+</html>

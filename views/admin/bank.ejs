@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Рейтинг</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="../../images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="../../stylesheets/style.css">
+    <style>
+        input[type=checkbox] {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(1.5);
+            /* IE */
+            -moz-transform: scale(1.5);
+            /* FF */
+            -webkit-transform: scale(1.5);
+            /* Safari and Chrome */
+            -o-transform: scale(1.5);
+            /* Opera */
+            transform: scale(1.5);
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <% include header %>
+    <% var tok = 0 %>
+        <div class="container" style="overflow:auto;">
+            <table class="table" id="table">
+                <thead>
+                    <tr>
+                        <th>Логин</th>
+                        <th>Мероприятие</th>
+                        <th>Победил?</th>
+                        <th>Кол-во</th>
+                        <th>Отправить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(function(usr){ %>
+                        <% tok += usr.tokens %>
+                        <%=usr.tokens%>
+                        <tr>
+                            <td>
+                                <a href="/profile/<%=usr.username%>" class="button">
+                                    <%=usr.username%>
+                                </a>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control" name="game_<%=usr.username%>" id="game_<%=usr.username%>">
+                                        <option value="0"> Угадай мелодию</option>
+                                        <option value="1"> Мафия </option>
+                                        <option value="2"> Хардстоун</option>
+                                        <option value="3"> Дженго</option>
+                                        <option value="4"> Уно</option>
+                                        <option value="5"> Элиас</option>
+                                        <option value="6"> Загс</option>
+                                        <option value="7"> Твистер</option>
+                                        <option value="8"> Русская рулетка</option>
+                                        <option value="9"> Вотерпонг</option>
+                                        <option value="10">Гоночоная трасса</option>
+                                        <option value="11">Дуэль на бластерах</option>
+                                        <option value="12">Волейбол</option>
+
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+
+                                    <input type="checkbox" class="form-check-input" name="<%=usr.username%>" id="<%=usr.username%>" value="checkedValue">
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="txt_<%=usr.username%>" value="1" id="txt_<%=usr.username%>" aria-describedby="helpId" placeholder="">
+                                </div>
+
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-dark" onclick="send('<%=usr.username%>')">Отправить</button>
+                            </td>
+                        </tr>
+                        <%})%>
+                </tbody>
+            </table>
+        </div>
+        <%=tok%>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <script>
+            String.prototype.insert = function (index, string) {
+                if (index > 0)
+                    return this.substring(0, index) + string + this.substring(index, this.length);
+
+                return string + this;
+                };
+            function send(id) {
+                url = "/bank/" + id;
+                // ill = "!\"#$%&\'()*+,./:;<=>?@[]^`{|}~";
+                ll = id; l = id.length;
+                for(i = 0; i < l; i++){
+                    if(id[i] == "." || id[i] == '@') id = id.slice(0, i) + "\\" + id.slice(i);
+                    i+=2; l+=2;
+                }
+                console.log(id)
+                dat = { 'game': $('#game_' + id).val(), "id": ll, 'win': $('#' + id).is(":checked"), "val":$('#txt_'+id).val() };
+                console.log(dat);
+                $.get(url, dat, function (data) {
+                    alert(data);
+                });
+            }
+        </script>
+</body>
+
+</html>

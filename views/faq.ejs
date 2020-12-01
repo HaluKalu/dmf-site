@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>FAQ</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="../stylesheets/style.css">
+
+</head>
+
+<body>
+	<%if(isAuth){%>
+		<%include header %>
+			<%} else {%>
+				<nav class="navbar navbar-expand-md navbar-dark " style="background-color: black; padding-bottom: 15px;">
+					<a class="navbar-brand" href="/" style="color: #ffe600; font-weight: bold;">DMF</a>
+					<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+					 aria-expanded="false" aria-label="Toggle navigation">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</button>
+					<div class="collapse navbar-collapse" id="collapsibleNavId">
+						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="/faq">FAQ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/reg">Регистрация</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/login">Вход</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<%}%>
+					<div class="container" style="background-color: white;">
+						<div class="faq">
+							<div class="faq-question">
+								<p class="vopros imit">?</p>
+								<h3> Что такое ДМФ? </h3>
+							</div>
+							<div class="faq-answer">
+								<p>ДМФ (День МатФака) – традиционный ежегодный празд&shy;ник нашего факуль&shy;тета, на котором мы будем рады видеть
+									не только студентов, выпуск&shy;ников и препо&shy;да&shy;ва&shy;те&shy;лей МатФака, но и гостей с других институтов.</p>
+							</div>
+						</div>
+						<div class="faq">
+							<div class="faq-question">
+								<p class="vopros imit">?</p>
+								<h3>Зачем нам регистрироваться на сайте?</h3>
+							</div>
+							<div class="faq-answer">
+								<p>В этом году для нужд факультета и организации нашего главного празд&shy;ника было решено сде&shy;лать сайт. Без регист&shy;рации
+									на нём, вы не сможете принять участие во многих традиционных заба&shy;вах, устраива&shy;емых на ДМФ. Кроме того,
+									вы не сможете создать\войти в команду, а старая валюта MFC (матфак коины) приобрела новый вид, и теперь будет пере&shy;да&shy;ваться
+									и храниться в электронном виде на сайте.</p>
+							</div>
+						</div>
+						<div class="faq">
+							<div class="faq-question">
+								<p class="vopros imit">?</p>
+								<h3>Для чего нужны MFC и как их заработать?</h3>
+							</div>
+							<div class="faq-answer">
+								<p>Заработать MFC вы сможете, если примите участие в испытаниях, которые для вас приготовила наша команда. Ещё электронная
+									валюта будет начисляться на ваш счёт в день самого ДМФа за участие в «коридорных» играх. Потратить MFC можно на
+									специальном аукционе с крутыми лотами и всякими плюшками.</p>
+							</div>
+						</div>
+						<div class="faq">
+							<div class="faq-question">
+								<p class="vopros imit">?</p>
+								<h3>Зачем собирать команду?</h3>
+							</div>
+							<div class="faq-answer">
+								<p>Для участия в том, что мы для вас приготовили. Состав команды - от 5 до 10 человек.</p>
+							</div>
+						</div>
+						<div class="faq">
+							<div class="faq-question">
+								<p class="vopros imit">?</p>
+								<h3>Зачем нужны реферальные ссылки?</h3>
+							</div>
+							<div class="faq-answer">
+								<p>За каждого приведённого человека, на самом ДМФе
+									<!--(дне матфака)-->вы получите бонусные MFC.</p>
+							</div>
+						</div>
+					</div>
+					<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+					 crossorigin="anonymous"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+					 crossorigin="anonymous"></script>
+					<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+					 crossorigin="anonymous"></script>
+</body>
+
+</html>

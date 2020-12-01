@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Список пользователей</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="../stylesheets/style.css">
+
+</head>
+
+<body>
+	<div class="wrapper">
+		<%include ../header%>
+			<div id="page-content">
+
+				<div class="container">
+					<div class="container">
+						<table class="table table-responsive table-striped table-admin" id="table">
+							<thead>
+								<tr>
+									<th onclick="sortt(0)">Логин</th>
+									<th onclick="sortt(1)">Имя</th>
+									<th onclick="sortt(2)">Фамилия</th>
+									<th onclick="sortt(3)">Группа</th>
+									<th onclick="sortt(4)">Институт</th>
+									<th>Подтвердить</th>
+									<th>Удалить</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%users.forEach(function(user){%>
+									<tr class="users-row" id="<%=user.username%>" <%if(!user.verify){%> style="color: red"
+										<%} else {%>style="color: green"
+											<%}%> >
+												<td>
+													<a href="/profile/<%=user.username%>" target="_blank">
+														<%=user.username%>
+													</a>
+												</td>
+												<td>
+													<%=user.f_name%>
+												</td>
+												<td>
+													<%=user.l_name%>
+												</td>
+												<td>
+													<%=user.group%>
+												</td>
+												<td>
+													<%=user.institut%>
+												</td>
+												<td>
+													<%if(!user.verify){%>
+														<button class="btn btn-outline-success" onclick="upd('<%=user.username%>')">
+															<i class="fa fa-check" aria-hidden="true"></i>
+														</button>
+														<%} else {%>
+															<button class="btn btn-outline-danger" onclick="rem('<%=user.username%>')">
+																<i class="fa fa-times" aria-hidden="true"></i>
+															</button>
+															<%}%>
+												</td>
+												<td>
+													<%if(user.role != "ADMIN"){%>
+														<button class="btn btn-outline-danger" onclick="removeUser('<%=user.username%>')">
+															<i class="fa fa-times" aria-hidden="true"></i>
+														</button>
+														<%} else {%>
+															<span style="color:rgb(225, 180, 1); user-select: none;">ADMIN</span>
+															<%}%>
+												</td>
+									</tr>
+									<%})%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		function upd(user) {
+			$.post("/admin/users_accept/" + user);
+			$("#" + user).css("color", "green");
+			$("#" + user + " td").last().remove();
+			$("#" + user).append('<td><button class="btn btn-outline-danger" onclick=\"rem(\'' + user + '\')"> <i class="fa fa-times" aria-hidden="true"></i> </button></td>');
+		}
+		function rem(user) {
+			$.post("/admin/users_reject/" + user);
+			$("#" + user).css("color", "red");
+			$("#" + user + " td").last().remove();
+			$("#" + user).append('<td><button class="btn btn-outline-success" onclick=\"upd(\'' + user + '\')"> <i class="fa fa-check" aria-hidden="true"></i> </button></td>');
+		}
+		function sortt(type_sort) {
+			var table = document.getElementById('table');
+			var tbody = table.getElementsByTagName('tbody')[0];
+			var rowsArray = [].slice.call(tbody.rows);
+			for (i = 0; i < rowsArray.length; i++) {
+				console.log(rowsArray[i].cells[type_sort].innerHTML);
+				for (j = i; j < rowsArray.length; j++) {
+					if (rowsArray[i].cells[type_sort].innerHTML > rowsArray[j].cells[type_sort].innerHTML) {
+						var tmp = rowsArray[i];
+						rowsArray[i] = rowsArray[j];
+						rowsArray[j] = tmp;
+						console.log(tmp);
+					}
+				}
+			}
+			table.removeChild(tbody);
+			for (var i = 0; i < rowsArray.length; i++) {
+				tbody.append(rowsArray[i]);
+			}
+			table.append(tbody);
+		}
+		function removeUser(userId) {
+			if(confirm(`Ты точно собираешься удалить пользователя ${userId}`)){
+				$.get(`/admin/removeuser/${userId}`, (data, status, jqxhr)=>{
+					console.log(data);
+					$(`#${userId}`).remove();
+				});
+			}
+		}
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	 crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	 crossorigin="anonymous"></script>
+</body>
+
+</html>

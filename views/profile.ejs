@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>
+    <%=user.username%>
+  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+
+<body>
+  <%include header %>
+    <!-- <div class="gradient"></div> -->
+    <div class="container text-center" style="min-height:0px">
+      <div class="margin-40 mobile-none"></div>
+      <div class="row">
+        <div class="offset-md-4 col-md-4 card shadow" style="padding: 50px;">
+          <p>
+            <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 3rem;"></i>
+          </p>
+          <p class="h3">
+            <%=user.f_name%>
+              <%=user.l_name%>
+          </p>
+          <p>Команда:
+            <a href="my_team" class="button">
+              <u>
+                <%=user.nameTeam%>
+              </u>
+            </a>
+          </p>
+          <p>Баланс:
+            <i>
+              <%=user.tokens%> MFC</i>
+          </p>
+          <p>Институт:
+            <a href="/rating/institut/<%=user.institut%>" class="button">
+              <u>
+                <%=user.institut%>
+              </u>
+            </a>
+          </p>
+          <p>Группа:
+            <a href="/rating/group/<%=user.group%>" class="button">
+              <u>
+                <%=user.group%>
+              </u>
+            </a>
+          </p>
+
+          <div class="form-group">
+            <label for="">Ваша реферальная ссылка</label>
+            <input type="text" class="form-control" name="ref-input" id="ref-input" aria-describedby="helpId" placeholder="Обнови страницу для получения"
+              value="dmf-imit.ru/reg?ref=<%=user.username%>">
+            <small id="helpId" class="form-text text-muted">Подробности узнаете во время ДМФ</small>
+          </div>
+        </div>
+        <%if(user.role == "ADMIN"){%>
+          <div class="offset-md-4 col-md-4 card shadow" style="padding: 20px; margin-top: 10px; margin-bottom: 10px;">
+            <div class="">
+              <div class="form-group">
+                <form action="/give_admin_token" method="post">
+                  <label for="tokens">Выдать себе токены</label>
+                  <input type="text" class="form-control" name="tokens" id="tokens" placeholder="Magick" value="100">
+                  <button type="submit" class="btn btn-outline-dark">Выдать</button>
+                </form>
+              </div>
+              <style>
+                u>a {
+                  color: black;
+                  text-decoration: none;
+                }
+              </style>
+              <!-- <a class="text-danger" href="/mfdzr_info">Прохождение Дозора</a> -->
+              <!-- <br> -->
+              <u>
+                <a href="/users_accept">Список пользователей</a>
+              </u>
+              <br>
+              <u>
+                <a href="/teams">Список команд</a>
+              </u>
+              <br>
+              <u>
+                <a href="/transactions_list">Список транзакций</a>
+              </u>
+              <br>
+              <u>
+                <a href="/users_recover">Список пользователей на восстановление пароля</a>
+              </u>
+                <button type="button" class="btn btn-outline-danger" onclick="dozor()">Начать опрос</button>
+            </div>
+          </div>
+          <%}%>
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+      <%if(user.role == "ADMIN"){%>
+        <script>
+          function dozor(){
+            if(confirm("Ты точно уверен что пришло время начинать голосование?")){
+              if(confirm("Отменить это будет уже нельзя! Публикуем новость?")){
+                $.post('/start_vote', function(data){
+                  alert(data);
+                  alert('Кнопка здесь так и останется, ибо мне лень.')
+                })
+              }
+            }
+          }
+          </script>
+      <%}%>
+        
+</body>
+
+</html>

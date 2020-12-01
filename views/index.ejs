@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Сайт посвящен дню матфака Волгоградского Государственного университета!">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <style>
+    * {
+      background-color: black;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      font-size: 2.7rem;
+    }
+
+    @font-face {
+      font-family: doctorGlitch;
+      src: url("/stylesheets/14721.woff");
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: gray;
+    }
+
+    .design {
+      font-family: another;
+      color: #f1da36;
+      font-size: 3.5rem;
+      width: 100vw;
+    }
+
+    .dmf {
+      font-family: doctorGlitch;
+      font-size: 7rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay">
+    <div class="center">
+      <p class="design dmf">DMF 2020</p>
+      <%if(!isAuth){%>
+        
+        <p>
+          <a href="/login" сlass="button">ВХОД</a>
+        </p>
+        <p>
+            <a href="/reg" сlass="button">РЕГИСТРАЦИЯ</a>
+          </p>
+        <%} else {%>
+          <p>
+            <a href="/profile" сlass="button">ПРОФИЛЬ</a>
+          </p>
+          <%}%>
+          <p><a href="/faq" сlass="button">F.A.Q.</a></p>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

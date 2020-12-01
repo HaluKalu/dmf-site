@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>
+    <%if(user.nameTeam != "none"){%>
+      <%=user.nameTeam%>
+        <%}else{%>Моя команда
+          <%}%>
+  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="stylesheets/style.css">
+
+</head>
+
+<body>
+  <%include header %>
+    <div class="container">
+      <% if (user.verify) {%>
+        <% if (msg.length > 0) { %>
+          <div class="alert alert-danger">
+            <%=msg%>
+          </div>
+          <% } %>
+            <%if(team != "") {%>
+              <div class="row" id="teamName" style="margin-top:5px;">
+                <div class="h3 col-8 col-md-10" style="word-break: break-word;">
+                  <%=user.nameTeam%>
+                </div>
+
+                <div class=" col-12 col-md-2">
+                  <a href="/exit_team" class="btn btn-outline-dark btn-sm" data-toggle="tooltip" title="Выход">Выйти из команды</a>
+
+                </div>
+              </div>
+              <div id="add-member">
+                <p class="h5">Члены команды:
+                  <%if(isCap){%>
+                    <button type="button" class="btn btn-outline-dark btn-sm" onclick="add_input()" data-toggle="tooltip" title="Пригласить участника"
+                      style="border-radius: 60px;">
+                      <i class="fa fa-plus" aria-hidden="true"> </i>
+                    </button>
+                    <%}%>
+                </p>
+              </div>
+              <table class="table table-light table-hover table-stripped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Логин</th>
+                    <th scope="col">
+                      <div class="d-none d-md-inline">Фамилия</div>
+                    </th>
+                    <th scope="col">
+                      <div class="d-none d-md-inline">Институт</div>
+                    </th>
+                    <th scope="col">Группа</th>
+                    <%if(isCap){%>
+                      <th scope="col">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </th>
+                      <%}%>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% team.forEach(function(re){ %>
+                    <tr id="<%=re.username%>">
+                      <td scope="row">
+                        <a href="/profile/<%=re.username%>" class="button">
+                          <%=re.username%>
+                        </a>
+                      </td>
+                      <td>
+                        <div class="d-none d-md-inline text-capitalize">
+                          <%=re.l_name%>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-none d-md-inline">
+                          <%=re.institut%>
+                        </div>
+                      </td>
+                      <td>
+                        <%=re.group%>
+                      </td>
+                      <%if(isCap && user.username != re.username){%>
+                        <td>
+                          <button onclick="delUser('<%=re.username%>')" type="button" class="btn btn-danger">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                        <%}%>
+                    </tr>
+                    <%})%>
+                </tbody>
+              </table>
+              <%if (invites.length > 0) {%>
+                <div class="container" style="opacity: 0.65">
+                  <p class="text h4">Приглашенные пользователи:</p>
+                  <ol>
+                    <% invites.forEach(function(inv){%>
+                      <li id="inv<%=inv%>">
+                        <a href="/profile/<%=inv%>" class="button h5">
+                          <%=inv%>
+                        </a>;
+                        <%if(isCap){%>
+                          <button onclick="delInvUser('<%=inv%>')" type="button" class="btn btn-danger">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                          </button>
+                          <% } %>
+                      </li>
+                      <%})%>
+                  </ol>
+                </div>
+                <%}%>
+                  <%} else {%>
+                    <%if(user.invites.length > 0){%>
+                      <p>Приглашения в команды: </p>
+                      <% user.invites.forEach(function(re){ %>
+                        <div>
+                          <a class="btn-outline-dark btn" href="/team/<%=re%>">
+                            <%=re%>
+                          </a>
+                        </div>
+                        <%})%>
+                          <%} else {%>
+                            <p class="text h5 text-warning">Здесь будут ваши приглашения в команды</p>
+                            <%}%>
+                              <p class="text">Создавай команду! В дальнейшем будет возможность добавить пользователей в неё.
+                              </p>
+                              <form action="/create_team" method="post" style="padding-bottom: 30px;">
+                                <div class="form-group">
+                                  <label for="team">Название: </label>
+                                  <input type="text" name="team" id="team" class="form-control" placeholder="Команда" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-dark">Создать</button>
+                              </form>
+                              <%}%>
+                                <%} else {%>
+                                  <p class="h2 text text-danger">Ожидайте подтверждения вашего аккаунта.</p>
+                                  <%}%>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+    <%if(isCap){%>
+      <script>
+        var memb = false;
+        function add_input() {
+          if (!memb)
+            $("#add-member").append("<div class='form-group' id='tmp'><input type='text' class='form-input' id='add-mem' placeholder='Логин' required> <button onclick='send_memb()' data-toggle='tooltip' title='Отправить приглашение' class='btn btn-outline-dark btn-sm'>Пригласить</button> <button class='btn btn-outline-danger btn-sm' data-toggle='tooltip' title='Скрыть данное поле' onclick='canc_invite()'><i class='fa fa-times' aria-hidden='true'></i></button></div>");
+          memb = true;
+        }
+        function send_memb() {
+          var url = '/invitemember/' + $("#add-mem").val();
+          if (url == '/invitemember/') {
+            $("#tmp").prepend("<div style='color: #f00202; padding-bottom:10px;'>Заполните поле логина</div>").children(':first').delay(3500).fadeOut(100);
+          } else {
+            $.get(url, function (data) {
+              if (data == "OK") {
+                $("#add-member").prepend("<div style='color: #038a00; padding-bottom:10px;'>Приглашение отправлено</div>").children(':first').delay(2500).fadeOut(100);
+                $("#tmp").remove();
+                memb = false;
+              } else {
+                $("#tmp").prepend("<div style='color: #f00202; padding-bottom:10px;'>" + data + "</div>").children(':first').delay(3500).fadeOut(100);
+              }
+            })
+          }
+        }
+        function canc_invite() {
+          $("#tmp").remove();
+          memb = false;
+        }
+
+        function delUser(usr) {
+          if (confirm('Вы уверены?')) {
+            $("#" + usr).remove();
+            var url = "/delUser/<%=user.nameTeam%>/" + usr;
+            $.get(url, function (data) {
+              if (data == "OK") {
+                $("#add-member").prepend("<div style='color: #038a00; padding-bottom:10px;'>" + data + "</div>").children(':first').delay(500).fadeOut(100);
+              }
+            })
+          }
+        }
+        function delInvUser(usr) {
+          if (confirm('Вы уверены?')) {
+            $("#inv" + usr).remove();
+            var url = "/removeinvite/" + usr;
+            $.get(url, function (data) {
+              if (data == "OK") {
+                $("#add-member").prepend("<div style='color: #038a00; padding-bottom:10px;'>" + data + "</div>").children(':first').delay(500).fadeOut(100);
+              }
+            })
+          }
+        }
+
+      </script>
+      <%}%>
+</body>
+
+</html>

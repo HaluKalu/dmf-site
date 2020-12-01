@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>
+    <%=user.f_name%>
+      <%=user.l_name%>
+  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+    <%if(me.role == "ADMIN"){%>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+      <%}%>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+</head>
+
+<body>
+  <%include ../header %>
+    <div class="container text-center" id="cont" style="min-height:0px">
+      <div class="margin-40 mobile-none"></div>
+      <div class="row">
+        <div class="offset-md-4 col-md-4 card shadow" style="padding: 50px;">
+          <%if(me.role == "ADMIN"){%>
+            <div class="form-group">
+              <label for="Смена роли"></label>
+              <select class="form-control" name="role" id="role">
+                <option>Организатор</option>
+                <option>Администратор</option>
+                <option>Пользователь</option>
+              </select>
+            </div>
+            <p>
+              <button type="button" class="btn" onclick="editRole()">
+                <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 3rem;"></i>
+              </button>
+            </p>
+            <%}else{%>
+              <p>
+                <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 3rem;"></i>
+              </p>
+              <%}%>
+                <p class="h3">
+                  <%=user.f_name%>
+                    <%=user.l_name%>
+                </p>
+                <p>Команда:
+                  <%if(user.nameTeam != "none"){%>
+                    <a href="/team/<%=user.nameTeam%>" class="button">
+                      <u>
+                        <%=user.nameTeam%>
+                      </u>
+                    </a>
+                    <%}%>
+                </p>
+                <p>Баланс:
+                  <i>
+                    <%=user.tokens%> MFC</i>
+                </p>
+                <p>Институт:
+                  <a href="/rating/institut/<%=user.institut%>" class="button">
+                    <u>
+                      <%=user.institut%>
+                    </u>
+                  </a>
+                </p>
+                <p>Группа:
+                  <a href="/rating/group/<%=user.group%>" class="button">
+                    <u>
+                      <%=user.group%>
+                    </u>
+                  </a>
+                </p>
+
+                <div id="tok">
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="tokens" id="tokens" placeholder="Ваш баланс : <%=me.tokens%>" style="text-overflow: ellipsis;">
+                  </div>
+                  <button type="button" class="btn btn-dark" onclick="sendTokens()">Отправить маткоины</button>
+                </div>
+                <div id="achivements" class="mt-20">
+                  <p class="text h3 mt-20">Достижения:</p>
+                  <%num = 0%>
+                  <div class="row">
+                      <%achivements.map((achiv)=>{%>
+                        <%if(user.achivements.indexOf(achiv._id)>-1){%>
+                          <%num++%>
+                            <div class="col-6">
+                              <button type="button" class="btn-achive" data-toggle="modal" data-target="#model<%=achiv._id%>">
+                                <figure data-toggle="tooltip" title="<%=achiv.text%>">
+                                  <img src="<%=achiv.img%>" class="achive achive-middle" alt="<%=achiv.text%>" />
+                                  <figcaption>
+                                    <%=achiv.title%>
+                                  </figcaption>
+                                </figure>
+                              </button>
+      
+                              <!-- Modal -->
+                              <div class="modal fade" id="model<%=achiv._id%>" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h3 class="modal-title"><%=achiv.title%></h3>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <img src="<%=achiv.img%>" class="achive achive-large" />
+                                      <p class="text h5"><%=achiv.text%></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <%}%>
+                              <%})%>
+                    </div>
+                    <%if(num == 0){%>
+                      <p class="text txt-muted">Этот человек ничего не добился... Стремись стать лучше него.</p>
+                      <%}%>
+                        <%if(me.role == 'ADMIN'){%>
+                          <div class="form-group">
+                            <label for="achiv">Изменить достижения</label>
+                            <select class="selectpicker dropup" data-dropup-auto="false" multiple id="achiv" name="achiv">
+                              <%achivements.map((ach)=>{%>
+                                <option value="<%=ach._id%>">
+                                  <%=ach.title%>
+                                </option>
+                                <%})%>
+                            </select>
+                            <button type="button" class="btn btn-outline-dark" onclick="updateAchiv()">Изменить</button>
+                          </div>
+                          <%}%>
+                </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <%if(me.role == "ADMIN"){%>
+      <script>
+        $(document).ready(function () {
+          const now_role = "<%=user.role%>";
+          // alert(role);
+          if (now_role == "USER") {
+            $("#role").val("Пользователь")
+          } else if (now_role == "ADMIN") {
+            $("#role").val("Администратор")
+          }
+        });
+        const login = "<%=user.username%>";
+        function editRole() {
+          const new_role = $("#role").val();
+          dat = { "login": login, "role": new_role, "adm": "<%=me.username%>" };
+          console.log(dat);
+          $.get('/admin/update_profile', dat, function (data) {
+            console.log(data);
+            $("#cont").prepend("<div style='color: #f00202; margin-top:10px; background-color: white; border: 1px solid black; border-radius:30px;'>" + data + "</div>").children(':first').delay(500).fadeOut(300);
+          })
+        }
+        function updateAchiv(){
+          $.post('/admin/achivements/user/update', {user: login, achivements: $('#achiv').val()}, (data, status, jqxhr)=>{
+            if(data.status ==='OK'){
+              window.location.reload();
+            } else {
+              alert(data.msg);
+            }
+          })
+        }
+      </script>
+      <%}%>
+        <script>
+          var my_tokens = <%=me.tokens%>;
+          function sendTokens() {
+            var tokens = $("#tokens").val();
+            if (tokens.match(/^-{0,1}\d+$/) || tokens.match(/^\d+\.\d+$/)) {
+              <%if (me.role == "ADMIN") {%>
+                if (tokens != 0) { <%} else {%>
+              if (tokens <= my_tokens && tokens > 0) { <%}%>
+                var dat = { "login": "<%=user.username%>", "tokens": tokens }
+                  var url = "/send_tokens";
+                  $.get(url, dat, function (data) {
+                    if (data == "ok") {
+                      location.reload();
+                    } else if (data == "n_t") {
+                      $("#tok").prepend("<div style='color: #f00202aa; margin-bottom:5px; background-color: white; border: 1px solid #aaa  ; border-radius:10px;'>" + "Не достаточное кол-во токенов. <br> Ваш баланс: " + my_tokens + "</div>").children(':first').delay(3000).fadeOut(300);
+                    } else if (data == "n_f") {
+                      $("#tok").prepend("<div style='color: #f00202aa; margin-bottom:5px; background-color: white; border: 1px solid #aaa  ; border-radius:10px;'>" + "Пользователь не найден." + "</div>").children(':first').delay(500).fadeOut(300);
+
+                    }
+                  });
+                } else {
+                  $("#tok").prepend("<div style='color: #f00202aa; margin-bottom:5px; background-color: white; border: 1px solid #aaa  ; border-radius:10px;'>" + "Не достаточное кол-во токенов. <br> Ваш баланс: " + my_tokens + "</div>").children(':first').delay(3000).fadeOut(300);
+                }
+              } else {
+                $("#tok").prepend("<div style='color: #f00202aa; margin-bottom:5px; background-color: white; border: 1px solid #aaa  ; border-radius:10px;'>" + "Введите корректное число!" + "</div>").children(':first').delay(500).fadeOut(300);
+              }
+            }
+        </script>
+
+</body>
+
+</html>
